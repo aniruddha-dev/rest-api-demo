@@ -1,0 +1,30 @@
+<div style="padding: 20px">
+  <table
+    class="table table-bordered border-primary"
+    *ngIf="productService.isAuthurized()"
+  >
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="productData.length > 0">
+        <tr *ngFor="let product of productData">
+          <td>{{ product.title }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.category | titlecase }}</td>
+          <th scope="row">
+            <a [routerLink]="['/product', product.id]">Details</a>
+          </th>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="productData.length === 0">No Data To Display!</ng-container>
+    </tbody>
+  </table>
+</div>
