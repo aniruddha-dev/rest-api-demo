@@ -1,4 +1,6 @@
-<div style="padding: 20px">
+<div class="m-5">
+  <div class="float-right mb-5"> <button type="button" class="btn btn-primary" (click)="onAddProduct()">Add Product</button></div>
+ 
   <table
     class="table table-bordered border-primary"
     *ngIf="productService.isAuthurized()"
@@ -15,7 +17,7 @@
     <tbody>
       <ng-container *ngIf="productData.length > 0">
         <tr *ngFor="let product of productData">
-          <td>{{ product.title }}</td>
+          <td>{{ product.title | titlecase }}</td>
           <td>{{ product.description }}</td>
           <td>{{ product.price | currency }}</td>
           <td>{{ product.category | titlecase }}</td>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Product } from '../interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,48 @@ export class ProductService {
     localStorage.setItem(this.authSecretKey, authToken);
   }
 
-  getProducts(): Observable<any[]> {
+  getProducts(): Observable<Product[]> {
     const headers = this.getHeaders();
-    return this.http.get<any[]>(`${this.apiUrl}/products`, { headers });
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, { headers });
   }
 
   getProductDetailById(id: number) {
     const headers = this.getHeaders();
-    return this.http.get(`${this.apiUrl}/products/` + id, { headers });
+    return this.http.get(`${this.apiUrl}/products/${id}`, { headers });
+  }
+
+  addProduct() {
+    const headers = this.getHeaders();
+
+    const body = {
+      title: 'test product',
+      price: 13.5,
+      description: 'lorem ipsum set',
+      image: 'https://i.pravatar.cc',
+      category: 'electronic',
+    };
+
+    return this.http.post<Product>(`${this.apiUrl}/products`, body, { headers });
+  }
+
+  updateProduct() {
+    const headers = this.getHeaders();
+
+    const body = {
+      id: 21,
+      title: 'test product',
+      price: 13.5,
+      description: 'lorem ipsum set',
+      image: 'https://i.pravatar.cc',
+      category: 'electronic',
+    };
+
+    return this.http.put<Product>(`${this.apiUrl}/products`, body, { headers });
+  }
+
+  deleteProductDetailById(id: number) {
+    const headers = this.getHeaders();
+    return this.http.delete(`${this.apiUrl}/products/${id}`, { headers });
   }
 
   private getHeaders() {

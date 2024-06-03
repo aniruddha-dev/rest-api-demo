@@ -10,8 +10,7 @@ import { Product } from '../shared/interfaces/product.interface';
 export class ProductViewComponent implements OnInit {
   productData: Array<Product> = [];
 
-  constructor(public productService: ProductService) {
-  }
+  constructor(public productService: ProductService) {}
 
   ngOnInit(): void {
     this.getProducts();
@@ -21,6 +20,17 @@ export class ProductViewComponent implements OnInit {
     this.productService.getProducts().subscribe(
       (data: Array<Product>) => {
         this.productData = data;
+      },
+      (error) => {
+        this.productData = [];
+      }
+    );
+  }
+
+  onAddProduct() {
+    this.productService.addProduct().subscribe(
+      (data: Product) => {
+        this.productData.push(data);
       },
       (error) => {
         this.productData = [];
